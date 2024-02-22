@@ -14,8 +14,22 @@ public class BlockQueue
 		new TBlock(),
 		new ZBlock()
 	};
+
+	public BlockQueue()
+	{
+		NextBlock = RandomBlock;
+	}
 	
 	private readonly Random random = new Random();
-
 	public Block NextBlock { get; private set; }
+	
+	private Block RandomBlock => blocks[random.Next(blocks.Length)];
+
+	public Block GetAndUpdate()
+	{
+		var block = NextBlock;
+		do NextBlock = RandomBlock;
+		while(block.Id == NextBlock.Id);
+		return block;
+	}
 }
