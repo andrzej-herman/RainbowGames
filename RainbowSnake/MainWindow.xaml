@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RainbowSnake"
         mc:Ignorable="d"
         MinHeight="500" MinWidth="500"
         Background="Transparent"
@@ -12,22 +11,108 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Icon="Assets/icon.ico"
-        Title="Rainbow Snake" Height="870" Width="820" ResizeMode="NoResize" AllowsTransparency="True">
-    <Border Background="{StaticResource BackgroundColor}" CornerRadius="20 0 20 20" MouseDown="Border_OnMouseDown">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+        Title="Rainbow Snake" Height="900" Width="820" 
+        ResizeMode="NoResize" 
+        AllowsTransparency="True"
+        PreviewKeyDown="MainWindow_OnPreviewKeyDown"
+        KeyDown="MainWindow_OnKeyDown">
+    <Viewbox>
+        <Border Background="{StaticResource BackgroundColor}" CornerRadius="20 0 20 20" MouseDown="Border_OnMouseDown">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
                     <StackPanel Background="Transparent" Orientation="Horizontal" HorizontalAlignment="Right" Width="76" Height="27">
                        <Image x:Name="MinButton" Source="Assets/min.png" Width="38" Height="27" MouseEnter="MinButton_OnMouseEnter" MouseDown="MinButton_OnMouseDown" MouseLeave="MinButton_OnMouseLeave" />
                        <Image x:Name="CloseButton" Source="Assets/close.png" Width="38" Height="27" MouseEnter="CloseButton_OnMouseEnter" MouseDown="CloseButton_OnMouseDown" MouseLeave="CloseButton_OnMouseLeave"/>
                     </StackPanel>
-                    
-                
+                </Grid>
+                <Grid Grid.Row="1" Margin="0 0 0 20">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Border Background="#2E2C3B" Padding="10" Margin="20 20 30 20" CornerRadius="10" Width="260">
+                            <TextBlock x:Name="ScoreText" TextAlignment="Center" FontSize="18">Wynik: 0 pkt.</TextBlock>
+                        </Border>
+                        <Image Width="120" 
+                               Source="Assets/mainlogo.png"/>
+                        <Border Background="#2E2C3B" Padding="10" Margin="30 20 20 20" CornerRadius="10" Width="260" HorizontalAlignment="Right">
+                            <TextBlock x:Name="SpeedText" TextAlignment="Center" FontSize="18">Prędkość węża: 0 km/h</TextBlock>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Border x:Name="GridBorder"
+                    Grid.Row="2"
+                    BorderBrush="{StaticResource GridLineColor}"
+                    BorderThickness="1.5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    RenderOptions.EdgeMode="Aliased"
+                    Margin="20,0,20,20">
+                    <UniformGrid x:Name="GameGrid"
+                                 Width="699"
+                                 Height="699"
+                                 Background="{StaticResource GridBackgroundColor}"
+                                 SnapsToDevicePixels="True"
+                                 RenderOptions.BitmapScalingMode="HighQuality">
+    
+                    </UniformGrid>
+                </Border>
+
+                <Border x:Name="Overlay1"
+                        Grid.Row="2"
+                        Background="{StaticResource OverlayColor}"
+                        Width="{Binding Path=ActualWidth, ElementName=GridBorder}"
+                        Height="{Binding Path=ActualHeight, ElementName=GridBorder}"
+                        Margin="{Binding Path=Margin, ElementName=GridBorder}"
+                        RenderOptions.EdgeMode="Aliased">
+    
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock
+                                   Foreground="#FAB909"
+                                   Text="Sterowanie" FontSize="24"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid Margin="50 0 50 0">
+                            <Image Width="125" 
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Source="Assets/strzalki.png"/>
+                            <TextBlock x:Name="lub"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="White"
+                                       Text="lub"
+                                       FontSize="24"/>
+                            <Image Width="125" 
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Source="Assets/wasd.png"/>
+                        </Grid>
+                        <TextBlock x:Name="OverlayText"
+                                   Margin="70"
+                                   Text="Naciśnij dowolny klawisz, aby rozpocząć grę" FontSize="22"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="Overlay2"
+                        Grid.Row="2"
+                        Visibility="Hidden"
+                        Background="{StaticResource OverlayColor}"
+                        Width="{Binding Path=ActualWidth, ElementName=GridBorder}"
+                        Height="{Binding Path=ActualHeight, ElementName=GridBorder}"
+                        Margin="{Binding Path=Margin, ElementName=GridBorder}"
+                        RenderOptions.EdgeMode="Aliased">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock
+                               x:Name="Countdown"
+                               Foreground="#FAB909"
+                               Text="Start gry za 3 ..." 
+                               FontSize="34"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="20"/>
+            </StackPanel>
+        </Border>
             </Grid>
-            
-        </Grid>
     </Border>
+    </Viewbox>
 </Window>
